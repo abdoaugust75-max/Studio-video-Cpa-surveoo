@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StudioChat — 7 editing agents</title>
+<style>
+:root{
+  --bg:#0d0d12; --bg2:#111117; --card:#16161d; --card2:#1c1c25; --line:#26262f; --line2:#34343f;
+  --tx:#f0f0f5; --tx2:#a8a8ba; --tx3:#666675;
+  --ac:#6d5cff; --ac2:#9d8fff; --gr:#27d98a; --or:#ffab2e; --rd:#ff5470;
+  --r:14px; --mono:'Consolas','SF Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow-x:hidden}
+body{background:var(--bg);color:var(--tx);font:13.5px/1.5 -apple-system,'Segoe UI',system-ui,sans-serif;overflow-y:hidden;display:flex;flex-direction:column;height:100dvh;min-width:0}
+#vmTitle{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:46vw}
+::selection{background:var(--ac);color:#fff}
+h1{font-size:15px;font-weight:800}
+button{cursor:pointer;border:none;border-radius:10px;padding:9px 16px;font:600 13px -apple-system,'Segoe UI';background:var(--card2);color:var(--tx);transition:.15s}
+button:hover{filter:brightness(1.2)}
+button.pri{background:var(--ac);color:#fff}
+button.ghost{background:transparent;border:1.5px solid var(--line);color:var(--tx2)}
+button.mini{padding:5px 11px;font-size:12px}
+input{background:var(--card);border:1.5px solid var(--line);color:var(--tx);border-radius:10px;padding:10px 14px;font:13.5px -apple-system,'Segoe UI';outline:none;width:100%}
+input:focus{border-color:var(--ac)}
+header{display:flex;align-items:center;gap:12px;padding:8px 18px;border-bottom:1px solid var(--line);background:var(--bg2);flex-shrink:0;flex-wrap:wrap}
+header h1{flex:0 0 auto}
+header .hint{display:none}
+@media (min-width:1100px){header .hint{display:inline}}
+.hdot{width:9px;height:9px;border-radius:50%;background:var(--tx3);display:inline-block}
+.hdot.ok{background:var(--gr);box-shadow:0 0 6px var(--gr)}
+.hdot.err{background:var(--rd)}
+main{display:grid;grid-template-columns:clamp(140px,14vw,190px) minmax(0,1fr) clamp(300px,30vw,420px);flex:1;min-height:0;height:auto}
+/* chat rail */
+#rail{background:var(--bg2);border-right:1px solid var(--line);overflow-y:auto;overflow-x:hidden;padding:8px;min-height:0}
+.ritem span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.ritem{display:flex;align-items:center;gap:9px;padding:11px 12px;border-radius:10px;cursor:pointer;color:var(--tx2);margin-bottom:3px;border:1.5px solid transparent;min-width:0}
+.ritem:hover{background:var(--card)}
+.ritem.on{background:var(--card2);color:var(--tx);border-color:var(--line2)}
+.ritem .dot{width:9px;height:9px;border-radius:50%}
+.ritem small{margin-left:auto;font:10px var(--mono);color:var(--tx3)}
+.rlabel{font:10px var(--mono);letter-spacing:.12em;color:var(--tx3);text-transform:uppercase;padding:8px 12px 4px}
+/* center */
+#center{display:flex;flex-direction:column;min-width:0;min-height:0;background:var(--bg)}
+#player{flex:1;display:flex;align-items:center;justify-content:center;background:#000;min-height:0;position:relative;overflow:hidden}
+#player video{max-width:100%;max-height:100%;border-radius:0}
+#player .ph{color:var(--tx3);font-size:13px;text-align:center;line-height:1.8}
+#vmeta{padding:6px 16px;font:11px var(--mono);color:var(--tx3);border-top:1px solid var(--line);background:var(--bg2);display:flex;gap:14px;align-items:center;flex-shrink:0;white-space:nowrap;overflow:hidden}
+#edits{padding:5px 16px 8px;font:11px var(--mono);color:var(--tx2);border-top:1px solid var(--line);background:var(--bg2);display:flex;gap:8px;flex-wrap:wrap;min-height:30px;max-height:64px;overflow-y:auto;flex-shrink:0}
+#edits .op{background:var(--card2);border:1px solid var(--line2);border-radius:8px;padding:3px 9px}
+/* chat panel */
+#side{border-left:1px solid var(--line);display:flex;flex-direction:column;background:var(--bg2);min-height:0;min-width:0}
+#chathead{padding:10px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:10px;flex-shrink:0}
+#chathead .dot{width:10px;height:10px;border-radius:50%}
+#log{flex:1;min-height:0;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
+.msg{max-width:88%;padding:10px 13px;border-radius:14px;white-space:pre-wrap;word-break:break-word;font-size:13.5px;flex-shrink:0}
+.msg.user{align-self:flex-end;background:var(--ac);color:#fff;border-bottom-right-radius:4px}
+.msg.agent{align-self:flex-start;background:var(--card2);border:1px solid var(--line2);border-bottom-left-radius:4px}
+.msg.agent.err{border-color:var(--rd)}
+.msg .t{display:block;font:9.5px var(--mono);color:var(--tx3);margin-top:5px}
+#inputrow{padding:10px;border-top:1px solid var(--line);display:flex;gap:8px;flex-shrink:0;background:var(--bg2)}
+#inputrow input{flex:1}
+.spin{display:inline-block;width:13px;height:13px;border:2px solid var(--tx3);border-top-color:var(--ac);border-radius:50%;animation:sp 1s linear infinite;vertical-align:-2px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.hint{color:var(--tx3);font-size:11.5px}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎬 StudioChat</h1>
+  <span class="hint">send a TikTok link — the agent watches it, suggests, edits with you</span>
+  <div style="flex:1"></div>
+  <span class="hdot" id="ledS" title="server"></span>
+  <span class="hdot" id="ledG" title="gemini"></span>
+  <a href="/studio.html" style="color:var(--tx3);font-size:12px;text-decoration:none">old studio →</a>
+</header>
+
+<main>
+  <div id="rail">
+    <div class="rlabel">Agents</div>
+    <div id="railList"></div>
+    <div class="rlabel" style="margin-top:8px">Tools</div>
+    <button class="ghost mini" style="width:100%;margin:4px 0" onclick="if(confirm('Reset this chat + memory?'))resetChat()">🗑 Reset chat</button>
+  </div>
+
+  <div id="center">
+    <div id="player"><div class="ph">No video yet.<br><br>Send your agent a TikTok URL in the chat →<br>it downloads it, <b>watches it</b>, and suggests what it can do.</div></div>
+    <div id="vmeta"><span id="vmAuthor">—</span><span id="vmDur"></span><span id="vmTitle"></span></div>
+    <div id="edits"><span class="hint">edit history appears here</span></div>
+  </div>
+
+  <div id="side">
+    <div id="chathead"><span class="dot" id="chatDot"></span><b id="chatName">—</b><span class="hint" id="chatLang"></span></div>
+    <div id="log"></div>
+    <div id="inputrow">
+      <input id="msg" placeholder="Paste a TikTok URL, or tell the agent what to do…" onkeydown="if(event.key==='Enter')send()">
+      <button class="pri" id="sendBtn" onclick="send()">➤</button>
+    </div>
+  </div>
+</main>
+
+<script>
+const $=i=>document.getElementById(i);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let BRANDS=[],chat=null,brand=null,pollT=null;
+
+async function api(u,o){const r=await fetch(u,o);const d=await r.json().catch(()=>({}));if(!r.ok)throw new Error(d.error||('http '+r.status));return d}
+
+async function boot(){
+  try{
+    const b=await api('/api/brands');BRANDS=b.brands;
+    const rail=$('railList');rail.innerHTML='';
+    BRANDS.forEach(x=>{
+      const el=document.createElement('div');el.className='ritem';el.dataset.k=x.key;
+      el.innerHTML='<span class="dot" style="background:'+(x.color||'#888')+'"></span><span>'+esc(x.label.split('—')[0].trim())+'</span><small>0</small>';
+      el.onclick=()=>openChat(x.key);
+      rail.appendChild(el);
+    });
+    $('ledS').className='hdot ok';
+    const saved=localStorage.getItem('sc_chat');
+    openChat(saved&&BRANDS.some(b=>b.key===saved)?saved:BRANDS[0].key);
+  }catch(e){$('ledS').className='hdot err'}
+  try{await api('/api/models');$('ledG').className='hdot ok'}catch(e){$('ledG').className='hdot err'}
+}
+
+async function openChat(k){
+  localStorage.setItem('sc_chat',k);
+  document.querySelectorAll('.ritem').forEach(x=>x.classList.toggle('on',x.dataset.k===k));
+  brand=BRANDS.find(b=>b.key===k);
+  $('chatName').textContent=brand.label.split('—')[0].trim();
+  $('chatDot').style.background=brand.color||'#888';
+  $('chatLang').textContent=brand.lang||'';
+  await refresh();
+  if(pollT)clearInterval(pollT);
+  pollT=setInterval(refresh,3500);
+}
+
+async function refresh(){
+  if(!brand)return;
+  try{
+    const d=await api('/api/chat/state?id='+brand.key);
+    chat=d;
+    // log
+    const log=$('log');
+    const sig=JSON.stringify((d.history||[]).map(h=>h.role+h.text.length))+(d.history||[]).length;
+    if(log.dataset.sig!==sig){
+      log.dataset.sig=sig;log.innerHTML='';
+      (d.history||[]).forEach(h=>{
+        const m=document.createElement('div');
+        m.className='msg '+h.role+(h.role==='agent'&&h.text.startsWith('✕')?' err':'');
+        m.innerHTML=esc(h.text)+'<span class="t">'+new Date(h.ts).toLocaleTimeString()+'</span>';
+        log.appendChild(m);
+      });
+      log.scrollTop=log.scrollHeight;
+    }
+    // rail badge
+    const el=document.querySelector('.ritem[data-k="'+brand.key+'"] small');
+    if(el)el.textContent=(d.history||[]).length;
+    // player
+    if(d.video_url){
+      const v=$('player').querySelector('video');
+      if(!v||v.dataset.src!==d.video_url){
+        $('player').innerHTML='<video controls src="'+d.video_url+'" data-src="'+d.video_url+'"></video>';
+      }
+      $('vmAuthor').textContent='@'+(d.video_meta?.author||'—');
+      $('vmDur').textContent=(d.video_meta?.duration||'')+'s';
+      $('vmTitle').textContent=(d.video_meta?.title||'').slice(0,60);
+    }else{
+      if($('player').querySelector('video')){$('player').innerHTML='<div class="ph">No video in this chat yet.<br><br>Send your agent a TikTok URL →</div>'}
+      $('vmAuthor').textContent='—';$('vmDur').textContent='';$('vmTitle').textContent='';
+    }
+    // edit history chips
+    const ops=d.plan_ops||[];
+    $('edits').innerHTML=ops.length?ops.map(o=>'✓ '+esc(o.op)).join(''):'<span class="hint">edit history appears here</span>';
+  }catch(e){}
+}
+
+async function send(){
+  const msg=$('msg').value.trim();if(!msg)return;
+  $('msg').value='';
+  const log=$('log');
+  const m=document.createElement('div');m.className='msg user';m.textContent=msg;log.appendChild(m);
+  const w=document.createElement('div');w.className='msg agent';w.innerHTML='<span class="spin"></span> working…';log.appendChild(w);
+  log.scrollTop=log.scrollHeight;
+  $('sendBtn').disabled=true;
+  try{
+    await api('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:brand.key,message:msg})});
+  }catch(e){w.innerHTML='✕ '+esc(e.message)}
+  // poll until the agent appends its reply
+  let tries=0;
+  const t=setInterval(async()=>{
+    tries++;await refresh();
+    const last=(chat&&chat.history||[])[(chat.history||[]).length-1];
+    if(last&&last.role==='agent'){clearInterval(t);w.remove();$('sendBtn').disabled=false}
+    else if(tries>100){clearInterval(t);w.innerHTML='⏱ still working — it will appear here';$('sendBtn').disabled=false}
+  },2000);
+}
+
+async function resetChat(){
+  if(!brand)return;
+  await api('/api/chat/reset?id='+brand.key,null,{method:'POST'}).catch(()=>{});
+  $('player').innerHTML='<div class="ph">No video yet.</div>';
+  $('vmAuthor').textContent='—';$('vmDur').textContent='';$('vmTitle').textContent='';
+  $('edits').innerHTML='<span class="hint">edit history appears here</span>';
+  refresh();
+}
+
+boot();
+</script>
+</body>
+</html>

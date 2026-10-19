@@ -1,0 +1,14 @@
+{
+  "name": "videostudio-production-atlas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Phone unboxing analysis, page-specific narration and scheduled Facebook production",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test tests/automation.test.js tests/telegram-agent.test.js tests/studio-tools.test.js tests/provider-audio.test.js tests/release.test.js",
+    "release": "node tools/prepare-github.js"
+  }
+}
