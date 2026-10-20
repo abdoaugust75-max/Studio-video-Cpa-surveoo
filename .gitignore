@@ -31,6 +31,7 @@
 !/tools/prepare-github.js
 !/tools/check-local.js
 !/tools/validate-campaign.js
+!/tools/private-state-backup.js
 !/tests/
 /tests/*
 !/tests/automation.test.js
@@ -49,3 +50,10 @@
 !/docs/API_AND_AUDIO.md
 !/docs/LOCAL_SETUP.md
 !/docs/LOCAL_VALIDATION_2026-10-18.md
+!/docs/PRIVATE_BACKUP.md
+!/private-backup/
+/private-backup/*
+!/private-backup/2026-10-20/
+/private-backup/2026-10-20/*
+!/private-backup/2026-10-20/manifest.json
+!/private-backup/2026-10-20/state.part-*.enc

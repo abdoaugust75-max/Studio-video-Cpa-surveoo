@@ -1,0 +1,102 @@
+{
+  "format": "VSSTATE1",
+  "createdAt": "2026-10-20T01:13:53.128Z",
+  "files": 3668,
+  "bytes": 26174039,
+  "excluded": "Downloaded/generated media, cache, temporary files, locks, installed runtimes. Original local files remain unchanged.",
+  "cipher": "AES-256-GCM",
+  "archiveSha256": "58da427e22ba236090f305bb2affa050d589513c1dd3dbd7f1ee3d02f9d38789",
+  "encryptedBytes": 12770804,
+  "parts": [
+    {
+      "file": "state.part-001.enc",
+      "bytes": 750000,
+      "sha256": "7c3ba4dd12c4fc052ffd369953f7770db5a79a4f442ab8b35c80ddd322006e1f"
+    },
+    {
+      "file": "state.part-002.enc",
+      "bytes": 750000,
+      "sha256": "172d7075aa3bdd4a48462c1b0b2ee52dce528fbe6615f694dbc9aae1edb3956e"
+    },
+    {
+      "file": "state.part-003.enc",
+      "bytes": 750000,
+      "sha256": "7dba0688b0d3bc8e567e7063c6ea64983801d2b3ba7930d1b23e00323ff8704c"
+    },
+    {
+      "file": "state.part-004.enc",
+      "bytes": 750000,
+      "sha256": "7abf8a0236af74f1aee2170c4f024b37a666f2102058864ae8d09928108cd7f0"
+    },
+    {
+      "file": "state.part-005.enc",
+      "bytes": 750000,
+      "sha256": "52eee63d1397dfb861b67d78518d9041518a684aa093c9ad0634baee880cc17d"
+    },
+    {
+      "file": "state.part-006.enc",
+      "bytes": 750000,
+      "sha256": "fdc5ee2dbfb56c1f89fa1f26d0c0b0482216bf73212c36a2c0a5ffa90fc8e730"
+    },
+    {
+      "file": "state.part-007.enc",
+      "bytes": 750000,
+      "sha256": "948bfefb7a0b293785ce523b37b59bc857b69d2fa6bbc94e1c10c85220dd166c"
+    },
+    {
+      "file": "state.part-008.enc",
+      "bytes": 750000,
+      "sha256": "058e92029cbcecc8ab1e6a13c7d5cf68e7bcfe482b8639781a831ff8bffc476e"
+    },
+    {
+      "file": "state.part-009.enc",
+      "bytes": 750000,
+      "sha256": "7b3df7b0f64a3cec6c59fcafd452e52a1542a5b7d5c339860a09ce71b9aa181f"
+    },
+    {
+      "file": "state.part-010.enc",
+      "bytes": 750000,
+      "sha256": "c66d40c88de2704c886e70b4d58fb73afba09003e88bb8c45cea0de8b278d2f7"
+    },
+    {
+      "file": "state.part-011.enc",
+      "bytes": 750000,
+      "sha256": "b45fc1a83a7d0ab509925e6e4c8d5994dd4bdf96d7813e9855ce213703fec473"
+    },
+    {
+      "file": "state.part-012.enc",
+      "bytes": 750000,
+      "sha256": "8299578052c1e53f1c95cdd9df2505dc511ba50b781f9f477847fb88cba4348c"
+    },
+    {
+      "file": "state.part-013.enc",
+      "bytes": 750000,
+      "sha256": "ae13d34376f58930a15b590d2e199d74b75255fb2ee377c0d5024ba3dc9f164f"
+    },
+    {
+      "file": "state.part-014.enc",
+      "bytes": 750000,
+      "sha256": "1087140fc20e3f42ffb00e51d3003abf34443f66ea7203d188a0c521b9e7ebcd"
+    },
+    {
+      "file": "state.part-015.enc",
+      "bytes": 750000,
+      "sha256": "57432d28a0d653d9a8c66b03d655ffd59439fbc92f4893e98a824fb21974dfb9"
+    },
+    {
+      "file": "state.part-016.enc",
+      "bytes": 750000,
+      "sha256": "9fd32d41bb9154e94a2d9e3593684bd55d469af9136a9221f223dbc8521ce62f"
+    },
+    {
+      "file": "state.part-017.enc",
+      "bytes": 750000,
+      "sha256": "d5618ed170797159410e10ac91eaeffbf0d641327d182fde7855c1611bbeb070"
+    },
+    {
+      "file": "state.part-018.enc",
+      "bytes": 20804,
+      "sha256": "11ed0380f58e78dccbcceaad14213589aed11e39faea5a7b3adfb73f8eb8e691"
+    }
+  ]
+}

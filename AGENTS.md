@@ -16,6 +16,10 @@
 - Never print tokens or private configurations. GitHub receives only an allowlisted
   source release; `data/`, `assets/`, logs, media, conversations and runtimes stay
   private. Use the intended private repository.
+- Owner-authorized recovery snapshot: `private-backup/2026-10-20/` may contain
+  authenticated AES-256-GCM ciphertext and its non-secret part manifest only.
+  Recovery keys stay outside GitHub/Notion and must never be printed. Normal
+  source releases still exclude the encrypted snapshot and all plain state.
 - Report live evidence separately from mocked tests. Readiness is not a successful
   generation, a token identity check is not an upload-permission test, and metadata
   alone does not prove pronunciation or visual quality. Do not claim bug-free work.

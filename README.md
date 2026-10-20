@@ -36,6 +36,10 @@ profile clips and runtime dependencies before production is available.
 Publishing is held and scheduling is off by default on a new copy. Tests do not
 upload videos. The existing owner's publishing hold remains in place.
 
+An owner-authorized encrypted state snapshot is stored separately in this private
+repository. See [configuration recovery](docs/PRIVATE_BACKUP.md). Its recovery key
+is retained locally outside GitHub and Notion; the normal release stays source-only.
+
 ## Verified scope
 
 `npm test` includes fresh empty-state boot, default publication hold, scheduling,
