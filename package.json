@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "test": "node --test tests/automation.test.js tests/telegram-agent.test.js tests/studio-tools.test.js tests/provider-audio.test.js tests/release.test.js",
+    "test": "node --test tests/automation.test.js tests/telegram-agent.test.js tests/studio-tools.test.js tests/provider-audio.test.js tests/release.test.js tests/telegram-video-review.test.js",
     "release": "node tools/prepare-github.js"
   }
 }
