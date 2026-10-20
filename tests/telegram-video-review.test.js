@@ -1,13 +1,18 @@
 'use strict';
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('fs'),os=require('os'),path=require('path');
 const {createTelegramVideoReview}=require('../lib/telegram-video-review');
-const {createTelegramAgent}=require('../lib/telegram-agent');
+const {createTelegramAgent,lockOwnerAlive}=require('../lib/telegram-agent');
 const {createTelegramReports}=require('../lib/telegram-reports');
 function fixture(t){
   const dir=fs.mkdtempSync(path.join(os.tmpdir(),'video-review-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));const file=path.join(dir,'video.mp4');fs.writeFileSync(file,'fixture');let sends=0;
   const opts={dir,now:()=>100,jobs:{enabled:false},campaigns:{list:()=>[{id:'run',createdAt:200,profiles:[{key:'maghrebly',videoId:'v1',script:'شوف هاد التليفون',status:'ready'}]}],catalog:()=>[{key:'maghrebly',label:'مغربلي',idea:'family',language:'Darija'}]},store:{artifact:()=>({file})},telegram:{settings:()=>({enabled:true}),sendVideo:async()=>{sends++;return{message_id:77};}},llm:{text:async()=>JSON.stringify({answer:'Short question opening; a visible detail; then a calm CTA.'})}};
   const review=createTelegramVideoReview(opts);t.after(()=>review.close());return{dir,file,opts,review,sends:()=>sends};
 }
+test('a previous container lock never survives through PID reuse',()=>{
+  assert.equal(lockOwnerAlive({pid:process.pid,host:'retired-container-not-this-host'}),false);
+  assert.equal(lockOwnerAlive({pid:process.pid,host:os.hostname()}),true);
+  if(process.platform==='linux')assert.equal(lockOwnerAlive({pid:process.pid,host:os.hostname(),birth:'old-start-time'}),false);
+});
 test('video sends once and reply receipt selects only the same page',async t=>{const f=fixture(t);assert.equal((await f.review.send('maghrebly','v1')).status,'sent');await f.review.send('maghrebly','v1');assert.equal(f.sends(),1);assert.equal(f.review.reply(77).videoId,'v1');await assert.rejects(f.review.send('mubadara','',77),/نفس الصفحة/);});
 test('permanent example survives restart, applies only to its page and can undo',async t=>{const f=fixture(t);await f.review.send('maghrebly','v1');await f.review.remember({page:'maghrebly',replyToMessageId:77,requestId:'owner-1'});const next=createTelegramVideoReview(f.opts);t.after(()=>next.close());assert.ok(next.context('maghrebly').patterns);assert.equal(next.context('mubadara'),null);next.undo('maghrebly');assert.equal(next.context('maghrebly'),null);});
 test('ambiguous examples and malformed model response leave memory unchanged',async t=>{const f=fixture(t);await assert.rejects(f.review.remember({page:'maghrebly',requestId:'x'}),/حدّد/);const bad=createTelegramVideoReview({...f.opts,llm:{text:async()=>'{"answer":null}'}});await assert.rejects(bad.remember({page:'maghrebly',videoId:'v1',requestId:'y'}));assert.equal(bad.context('maghrebly'),null);bad.close();});
