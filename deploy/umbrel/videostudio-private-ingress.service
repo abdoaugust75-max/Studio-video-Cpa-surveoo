@@ -1,0 +1,13 @@
+[Unit]
+Description=Keep the VideoStudio backend behind its HTTPS entry
+After=docker.service ufw.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/bin/sh -c '/usr/sbin/iptables -C DOCKER-USER -i enp0s6 -p tcp -m conntrack --ctorigdstport 34567 -j DROP 2>/dev/null || /usr/sbin/iptables -I DOCKER-USER 1 -i enp0s6 -p tcp -m conntrack --ctorigdstport 34567 -j DROP'
+ExecStop=/bin/sh -c '/usr/sbin/iptables -D DOCKER-USER -i enp0s6 -p tcp -m conntrack --ctorigdstport 34567 -j DROP 2>/dev/null || true'
+
+[Install]
+WantedBy=multi-user.target

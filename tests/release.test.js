@@ -54,6 +54,12 @@ test('fresh source boots with isolated empty state and publishing held by defaul
   for(let n=0;n<70;n++){try{const r=await fetch(base+'/health/live',{signal:AbortSignal.timeout(1000)});if(r.ok){live=await r.json();break;}}catch(_){}if(child.exitCode!==null)break;await new Promise(r=>setTimeout(r,150));}
   assert.ok(live?.ok,'Fresh process did not boot: '+output.slice(-1500));assert.equal(live.role,'web');
   assert.equal((await fetch(base+'/pipeline.html')).status,200);
+  for(const endpoint of ['/api/v2/writers/settings','/api/v2/video/settings']){
+    const invalid={pages:{unknown_profile:{}}};
+    const options=origin=>({method:'POST',headers:{'Content-Type':'application/json',Origin:origin},body:JSON.stringify(invalid)});
+    assert.ok([200,400].includes((await fetch(base+endpoint,options('https://127.0.0.1:'+port))).status),'Same-host HTTPS must reach normal settings validation');
+    assert.equal((await fetch(base+endpoint,options('https://other.invalid'))).status,403,'Cross-host writes stay forbidden');
+  }
   const catalog=await(await fetch(base+'/api/v2/campaigns')).json();assert.equal(catalog.profiles.length,7);assert.ok(catalog.profiles.every(p=>p.configured));
   const automation=await(await fetch(base+'/api/v2/automation/settings')).json();assert.equal(automation.enabled,false);
   const held=await fetch(base+'/api/publish',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({confirm:true})});assert.equal(held.status,409);assert.match(await held.text(),/paused/);

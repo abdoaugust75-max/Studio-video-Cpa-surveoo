@@ -1,0 +1,24 @@
+manifestVersion: 1
+id: freebuff-videostudio
+name: VideoStudio
+tagline: Phone video production and page-specific narration
+icon: https://51.170.133.14:34568/atlas/studio-icon.svg
+category: developer
+version: '1.0.0'
+port: 34567
+description: >-
+  Private production studio with seven page identities, source screening,
+  timed narration, karaoke, profile clips and Telegram operations.
+  Publishing is held and scheduling disabled during migration testing.
+developer: CPA Growth Hub
+website: https://github.com/abdoaugust75-max/Studio-video-Cpa-surveoo
+submitter: CPA Growth Hub
+submission: https://github.com/abdoaugust75-max/Studio-video-Cpa-surveoo
+repo: https://github.com/abdoaugust75-max/Studio-video-Cpa-surveoo
+support: https://github.com/abdoaugust75-max/Studio-video-Cpa-surveoo/issues
+gallery: []
+releaseNotes: Initial ARM64 migration with publication held.
+dependencies: []
+path: https://51.170.133.14:34568/pipeline.html
+defaultUsername: ''
+defaultPassword: ''

@@ -30,7 +30,7 @@ def progress(stage, percent):
 
 model_name = request.get("model", "small")
 progress('loading local speech model', 30)
-model = WhisperModel(model_name, device="cpu", compute_type="int8", cpu_threads=4,
+model = WhisperModel(model_name, device="cpu", compute_type="int8", cpu_threads=max(1,min(8,int(os.environ.get('VS_SPEECH_THREADS','4')))),
                      download_root=request["model_dir"])
 with wave.open(request['audio'], 'rb') as source:
     if source.getnchannels() != 1 or source.getsampwidth() != 2 or source.getframerate() != 16000:

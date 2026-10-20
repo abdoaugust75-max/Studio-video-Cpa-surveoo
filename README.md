@@ -2,6 +2,9 @@
 
 Phone unboxing discovery and visual screening, whole-video analysis, seven page writers, Kore narration, audio-aligned karaoke, profile clips and scheduled Facebook publishing.
 
+Owner-authorized ARM64 Umbrel migration is documented in [VPS operations](docs/VPS_UMBREL.md).
+Publishing remains held during migration validation.
+
 ## Local
 
 Requires Node 22+, FFmpeg/FFprobe, yt-dlp and the Python speech runtime. On Windows, run `tools/setup-speech.ps1` to install speech alignment. Existing installs keep all state in `data/` and all owner media in `assets/`.

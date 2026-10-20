@@ -1,0 +1,37 @@
+version: '3.7'
+services:
+  app_proxy:
+    environment:
+      APP_HOST: freebuff-videostudio_server_1
+      APP_PORT: 34567
+  server:
+    image: localhost:5001/videostudio:2026-10-20-arm64
+    user: '1000:1000'
+    restart: unless-stopped
+    init: true
+    mem_limit: 6g
+    cpus: 2.0
+    pids_limit: 256
+    stop_grace_period: 60s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    volumes:
+      - ${APP_DATA_DIR}/data:/app/data
+      - ${APP_DATA_DIR}/assets:/app/assets
+    environment:
+      VS_HOST: 0.0.0.0
+      VS_PORT: 34567
+      VS_JOB_CONCURRENCY: 1
+      VS_SPEECH_PYTHON: /opt/speech/bin/python
+      VS_AGENT_PYTHON: /opt/agent/bin/python
+      VS_SPEECH_MODELS_DIR: /app/data/speech-models
+      VS_SPEECH_THREADS: '2'
+      VS_FONTS_DIR: /app/data/fonts
+      TZ: Africa/Casablanca
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: '3'

@@ -57,3 +57,7 @@
 /private-backup/2026-10-20/*
 !/private-backup/2026-10-20/manifest.json
 !/private-backup/2026-10-20/state.part-*.enc
+!/deploy/
+!/deploy/umbrel/
+!/deploy/umbrel/**
+!/docs/VPS_UMBREL.md

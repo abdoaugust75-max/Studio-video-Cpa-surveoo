@@ -9,7 +9,7 @@ const {instant,localParts,upcoming,createAutomation}=require('../lib/automation'
 const clone=x=>JSON.parse(JSON.stringify(x));
 function temp(t){const dir=fs.mkdtempSync(path.join(os.tmpdir(),'studio-automation-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));return dir;}
 test('timezone conversion follows Morocco, Riyadh, UK and US DST',()=>{
-  assert.equal(new Date(instant('2026-10-15','13:00','Africa/Casablanca')).toISOString(),'2026-10-15T12:00:00.000Z');
+  assert.deepEqual(localParts(instant('2026-10-15','13:00','Africa/Casablanca'),'Africa/Casablanca'),{date:'2026-10-15',time:'13:00'}); // Follow installed IANA rules, including tzdb 2026c.
   assert.equal(new Date(instant('2026-10-15','20:00','Asia/Riyadh')).toISOString(),'2026-10-15T17:00:00.000Z');
   assert.equal(new Date(instant('2026-10-15','19:00','Europe/London')).toISOString(),'2026-10-15T18:00:00.000Z');
   assert.equal(new Date(instant('2026-12-15','19:00','America/New_York')).toISOString(),'2026-12-16T00:00:00.000Z');
@@ -83,16 +83,16 @@ function scheduler(t,valid=true){
   const telegram={settings:()=>({enabled:false}),notify:async()=>({skipped:true})};
   const automation=createAutomation({dir,jobs,store,campaigns,pipeline,telegram,publish:{},now:()=>clock});t.after(()=>automation.close());automation.save({enabled:true});
   const restart=()=>{automation.close();const next=createAutomation({dir,jobs,store,campaigns,pipeline,telegram,publish:{},now:()=>clock});t.after(()=>next.close());return next;};
-  return{automation,jobs,records,runs,restart,setTime:ts=>clock=Date.parse(ts),dir};
+  return{automation,jobs,records,runs,restart,setTime:ts=>clock=typeof ts==='number'?ts:Date.parse(ts),dir};
 }
 test('scheduler prepares two daily batches once, dispatches once, survives restart state',async t=>{
   const f=scheduler(t);await f.automation.tick();assert.equal(f.records.filter(j=>j.type==='pipeline.run').length,2);
   await f.automation.tick();assert.equal(f.records.length,2);
   for(const job of f.records){job.status='done';job.result={campaign:{runId:'run'+job.id},status:'campaign_queued'};f.runs.push({id:'run'+job.id,analysisId:job.params.analysisId,profiles:[{key:'maghrebly',videoId:'v'+job.id,status:'ready'}]});}
-  f.setTime('2026-10-15T12:00Z');await f.automation.tick();assert.equal(f.records.filter(j=>j.type==='campaign.publish').length,1);
+  f.setTime(instant('2026-10-15','13:00','Africa/Casablanca'));await f.automation.tick();assert.equal(f.records.filter(j=>j.type==='campaign.publish').length,1);
   await f.automation.tick();assert.equal(f.records.filter(j=>j.type==='campaign.publish').length,1);
   const delivery=f.records.find(j=>j.type==='campaign.publish');delivery.status='done';delivery.result={status:'published',deliveries:[{ok:true,destination:{name:'one'},postId:'p'}]};
-  f.setTime('2026-10-15T13:00Z');await f.automation.tick();assert.equal(f.automation.status().state.slots['maghrebly:2026-10-15:0'].status,'published');
+  f.setTime(instant('2026-10-15','14:00','Africa/Casablanca'));await f.automation.tick();assert.equal(f.automation.status().state.slots['maghrebly:2026-10-15:0'].status,'published');
   assert.ok(fs.existsSync(path.join(f.dir,'automation-state.json')));
   const restarted=f.restart();await restarted.tick();assert.equal(f.records.filter(j=>j.type==='campaign.publish').length,1);assert.equal(restarted.status().state.slots['maghrebly:2026-10-15:0'].status,'published');
 });
@@ -107,7 +107,7 @@ test('scheduler validates settings and does not backfill old slots',async t=>{
 test('scheduler reports partial destination outcomes as partial, not stuck or fully published',async t=>{
   const f=scheduler(t);await f.automation.tick();
   for(const job of f.records){job.status='done';job.result={campaign:{runId:'run'+job.id},status:'campaign_queued'};f.runs.push({id:'run'+job.id,profiles:[{key:'maghrebly',videoId:'v',status:'ready'}]});}
-  f.setTime('2026-10-15T12:00Z');await f.automation.tick();
+  f.setTime(instant('2026-10-15','13:00','Africa/Casablanca'));await f.automation.tick();
   const job=f.records.find(j=>j.type==='campaign.publish');job.status='done';job.result={status:'needs_connection',deliveries:[{ok:true,postId:'p',destination:{name:'A'}},{ok:false,error:'Token expired',destination:{name:'B'}}]};
   await f.automation.tick();assert.equal(f.automation.status().state.slots['maghrebly:2026-10-15:0'].status,'partial');await f.automation.tick();assert.equal(f.records.filter(j=>j.type==='campaign.publish').length,1);
 });

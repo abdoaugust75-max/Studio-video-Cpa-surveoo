@@ -2,6 +2,9 @@
 
 - Work on the local Windows studio. Do not install or introduce Linux, Docker or
   remote hosting as part of the current work.
+- Subsequent owner authorization (20 October): adapt and deploy a separate ARM64
+  instance on the supplied Ubuntu VPS as an Umbrel app, using existing Docker.
+  Preserve other services and the local installation. Publishing remains held.
 - The owner currently permits tests only. Keep `publish-hold.json` enabled and
   automation disabled. Do not upload to Facebook/Instagram, save owner approval,
   or enable scheduling without a subsequent explicit owner request.

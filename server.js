@@ -357,7 +357,7 @@ function cacheSave() { try { const o = {}; for (const [k, v] of searchCache) o[k
 function ytdlpMeta(url, timeoutSec = 80) {
   const expires=Date.now()+timeoutSec*1000;
   return metadataGate(()=>{if(Date.now()>=expires)return null;return new Promise(resolve => {
-    const p = spawn(String(process.env.VS_YTDLP || (process.platform === 'win32' ? path.join(ROOT, 'tools', 'yt-dlp.exe') : 'yt-dlp')), ['-j', '--no-warnings', '--socket-timeout', '30', url], { windowsHide: true });
+    const p = spawn(String(process.env.VS_YTDLP || (process.platform === 'win32' ? path.join(ROOT, 'tools', 'yt-dlp.exe') : 'yt-dlp')), ['-j', '--no-warnings', '--socket-timeout', '30', url], { windowsHide: true, detached:process.platform!=='win32' });
     let out = '';
     p.stderr.on('data',()=>{});
     p.stdout.on('data', c => out += c);
@@ -382,7 +382,7 @@ function ytdlpMeta(url, timeoutSec = 80) {
 }
 function curlGet(url, timeoutSec = 45) {
   return new Promise((resolve, reject) => {
-    const p = spawn('curl.exe', ['-sL', '--max-time', String(timeoutSec), '-A', 'curl/8.21.0', '-H', 'Accept: */*', url], { windowsHide: true });
+    const p = spawn(process.platform==='win32'?'curl.exe':'curl', ['-sL', '--max-time', String(timeoutSec), '-A', 'curl/8.21.0', '-H', 'Accept: */*', url], { windowsHide: true });
     let out = '', err = '';
     p.stdout.on('data', c => out += c); p.stderr.on('data', c => err += c);
     p.on('error', reject);
@@ -612,7 +612,7 @@ const facebookReconnect = require('./lib/facebook-reconnect').createFacebookReco
 routes['/api/v2/facebook/reconnect'] = async (req, res) => {
   if (req.method !== 'POST') return j(res, 405, { error: 'POST required' });
   const origin = req.headers.origin;
-  if (origin && origin !== 'http://' + req.headers.host) return j(res, 403, { error: 'Use the local studio connection form.' });
+  if (origin && !['http://'+req.headers.host,'https://'+req.headers.host].includes(origin)) return j(res, 403, { error: 'Use the local studio connection form.' });
   try {
     const input = await readJson(req);
     j(res, 200, await facebookReconnect.reconnect(input.token, input.page));
@@ -974,7 +974,7 @@ async function downloadVideo(url) {
   const file = path.join(MEDIA, id + '.mp4');
   if (fs.existsSync(file) && fs.statSync(file).size > 10000) return file;
   await new Promise((resolve, reject) => {
-    const p = spawn('curl.exe', ['-sL', '--max-time', '180', '-o', file, '-A', UA, url], { windowsHide: true });
+    const p = spawn(process.platform==='win32'?'curl.exe':'curl', ['-sL', '--max-time', '180', '-o', file, '-A', UA, url], { windowsHide: true });
     p.on('error', reject);
     p.on('close', code => code === 0 && fs.existsSync(file) && fs.statSync(file).size > 10000 ? resolve() : reject(new Error('download failed ' + code)));
   });
@@ -1343,8 +1343,8 @@ routes['/api/batch'] = async (req, res) => {
 };
 
 // ---------- StudioChat: 7 editing agents + local ffmpeg engine ----------
-const FFMPEG = (() => { try { const d = fs.readdirSync(path.join(ROOT, 'tools', 'ffmpeg')).find(f => f.startsWith('ffmpeg-')); return path.join(ROOT, 'tools', 'ffmpeg', d, 'bin', 'ffmpeg.exe'); } catch (_) { return 'ffmpeg'; } })();
-const FFPROBE = FFMPEG === 'ffmpeg' ? 'ffprobe' : FFMPEG.replace('ffmpeg.exe', 'ffprobe.exe');
+const FFMPEG = require('./lib/media').findBinary(path.join(ROOT,'tools','ffmpeg'),'ffmpeg.exe');
+const FFPROBE = require('./lib/media').findBinary(path.join(ROOT,'tools','ffmpeg'),'ffprobe.exe');
 const CHATS = path.join(DATA, 'chats');
 if (!fs.existsSync(CHATS)) fs.mkdirSync(CHATS, { recursive: true });
 function chatFile(k) { return path.join(CHATS, k + '.json'); }

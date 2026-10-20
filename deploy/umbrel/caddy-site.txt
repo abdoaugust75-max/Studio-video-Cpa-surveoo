@@ -1,0 +1,6 @@
+# Append only after validating the complete Caddy configuration.
+https://51.170.133.14:34568 {
+    reverse_proxy 127.0.0.1:34567 {
+        header_down Location "^https?://51[.]170[.]133[.]14:2000/.*" "https://51.170.133.14/"
+    }
+}

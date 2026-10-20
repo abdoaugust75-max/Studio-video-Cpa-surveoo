@@ -19,7 +19,7 @@ async function main(){
     if(!p.videoId){checks.push({page:p.key,ok:false,error:'No assembled output',stage:p.status});continue;}
     const video=artifact(p.videoId),audio=artifact(p.ttsId),script=artifact(p.scriptId),exists=fs.existsSync(video.file);
     const stream=video.probe||{},delta=Math.abs((stream.duration||0)-(audio.probe?.duration||0));
-    const ffroot=path.join(root,'tools','ffmpeg'),version=fs.readdirSync(ffroot).find(n=>n.startsWith('ffmpeg-')),ff=version?path.join(ffroot,version,'bin','ffmpeg.exe'):'ffmpeg.exe';
+    const ff=require('../lib/media').findBinary(path.join(root,'tools','ffmpeg'),'ffmpeg.exe');
     const decoded=exists?spawnSync(ff,['-v','error','-i',video.file,'-f','null','-'],{windowsHide:true,timeout:120000,maxBuffer:1024*1024}):{status:1};
     const list=publisher.destinations(p.key).filter(d=>d.enabled),plan=publisher.plan({artifacts:[video.id],destinations:list.map(d=>d.id)});pairs+=plan.postable||0;
     const kbFile=path.join(root,'data','kb_'+p.key+'.json'),knowledge=fs.existsSync(kbFile)?read(kbFile).map(k=>k.text).join('\n'):'';
@@ -33,7 +33,8 @@ async function main(){
   const originalFetch=global.fetch;let outbound=0,blocked=false;
   global.fetch=async()=>{outbound++;throw Error('Network forbidden by local validator');};
   try{await publisher.execute({confirm:true});}catch(e){blocked=/paused|no upload/i.test(e.message);}finally{global.fetch=originalFetch;}
-  const result={checkedAt:Date.now(),runId,ok:checks.length===7&&checks.every(p=>p.ok)&&pairs===8&&blocked&&outbound===0,profiles:checks,posting:{simulatedApprovalOnly:true,pairs,holdBlocked:blocked,networkCalls:outbound,uploaded:0},note:'Technical decode/timing checks and a simulated approved plan only. No owner approval was saved, no upload permission was exercised, and creative quality is not proved by metadata.'};
+  const expectedPages=Array.isArray(run.pages)?run.pages:[],expectedPairs=checks.reduce((n,p)=>n+(p.destinations?.length||0),0);
+  const result={checkedAt:Date.now(),runId,ok:expectedPages.length>0&&checks.length===expectedPages.length&&new Set(checks.map(p=>p.page)).size===expectedPages.length&&checks.every(p=>p.ok&&expectedPages.includes(p.page))&&pairs===expectedPairs&&expectedPairs>0&&blocked&&outbound===0,profiles:checks,posting:{simulatedApprovalOnly:true,pairs,holdBlocked:blocked,networkCalls:outbound,uploaded:0},note:'Technical decode/timing checks and a simulated approved plan only. No owner approval was saved, no upload permission was exercised, and creative quality is not proved by metadata.'};
   const out=path.join(dir,'local-campaign-validation-'+runId+'.json');fs.writeFileSync(out,JSON.stringify(result,null,2));console.log(JSON.stringify(result));if(!result.ok)process.exitCode=1;
 }
 main().catch(e=>{console.error(String(e.message).replace(/AIza[\w-]+/g,'[REDACTED]'));process.exitCode=1;});
