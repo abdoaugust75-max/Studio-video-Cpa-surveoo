@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="تسوّق الآن وخلّص بالتقسيط — ابدأ من 100 درهم شهرياً. هواتف وإلكترونيات أصلية بخصم حتى 90%، الدفع عند الاستلام."/>
+<title>Tashilat Tech — التقسيط بدون تعقيد</title>
+<style>
+/* ===== mobile-first ===== */
+@font-face{font-family:'Tajawal';font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/Iura6YBj_oCad4k1nzGBCw.woff2) format('woff2');}
+@font-face{font-family:'Tajawal';font-style:normal;font-weight:700;font-display:swap;src:url(/fonts/Iurf6YBj_oCad4k1l5anHrFpiQ.woff2) format('woff2');}
+@font-face{font-family:'Tajawal';font-style:normal;font-weight:900;font-display:swap;src:url(/fonts/Iurf6YBj_oCad4k1l8KiHrFpiQ.woff2) format('woff2');}
+:root{
+--bg:#f6f7f9;--surface:#ffffff;--line:#e3e7ee;--ink:#101828;--body:#475467;--muted:#667085;
+--brand:#16a34a;--brand-2:#15803d;--brand-soft:#f0fdf4;--navy:#0f1b33;
+--green:#15803d;--green-soft:#ecfdf3;--red:#dc2626;
+--radius:14px;--shadow:0 1px 2px rgba(16,24,40,.04),0 4px 16px rgba(16,24,40,.07)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font-family:'Tajawal',Tahoma,Arial,sans-serif;line-height:1.7;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+img{display:block;max-width:100%}
+a{text-decoration:none;color:inherit}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+.container{max-width:1080px;margin:0 auto;padding:0 14px}
+/* topbar */
+.topbar{background:var(--navy);color:#dbe4f3;text-align:center;font-size:12.5px;font-weight:700;padding:8px 12px}
+.topbar b{color:#ffd58a}
+/* header */
+.hdr{position:sticky;top:0;z-index:900;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line)}
+.hdr-in{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 14px;max-width:1080px;margin:0 auto}
+.logo{display:flex;align-items:center;gap:9px;min-width:0}
+.logo-mark{width:38px;height:38px;border-radius:11px;background:var(--brand);display:flex;align-items:center;justify-content:center;flex:0 0 auto;box-shadow:0 4px 12px rgba(22,163,74, .35)}
+.logo-name{font-weight:900;font-size:15px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logo-name small{display:block;font-size:10.5px;color:var(--muted);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr-cta{background:var(--brand);color:#fff;font-weight:800;font-size:13px;padding:10px 16px;border-radius:10px;box-shadow:0 4px 14px rgba(22,163,74, .3);white-space:nowrap}
+.hdr-cta:active{background:var(--brand-2)}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:800;border-radius:12px;text-align:center;border:none;cursor:pointer;transition:background .15s,transform .1s}
+.btn:active{transform:scale(.97)}
+.btn-primary{background:var(--brand);color:#fff;box-shadow:0 8px 22px rgba(22,163,74, .35)}
+.btn-primary:active{background:var(--brand-2)}
+.btn-lg{padding:15px 20px;font-size:16px;width:100%;min-height:52px}
+/* hero */
+.hero{background:linear-gradient(180deg,#ffffff,var(--bg));padding:30px 14px 28px;text-align:center;position:relative;overflow:hidden}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:6px;background:var(--green-soft);border:1px solid #bce7cd;color:var(--green);font-size:12px;font-weight:800;padding:6px 12px;border-radius:50px;margin-bottom:14px}
+.hero h1{font-size:clamp(25px,7.5vw,42px);font-weight:900;line-height:1.32;margin-bottom:12px}
+.hero h1 .hl{color:var(--brand)}
+.hero-sub{color:var(--body);font-size:14.5px;max-width:540px;margin:0 auto 6px}
+.hero-sub b{color:var(--ink)}
+.cta-hint{font-size:13px;font-weight:800;color:var(--brand-2);margin:16px auto 8px;animation:bounceHint 1.4s infinite}
+@keyframes bounceHint{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+.hero-cta-wrap{max-width:420px;margin:0 auto}
+.hero-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 14px;margin-top:12px;font-size:12.5px;color:var(--muted);font-weight:600}
+.hero-trust span{display:inline-flex;align-items:center;gap:4px}
+.hero-trust .tick{color:var(--green);font-weight:900}
+.scroll-hint{text-align:center;margin-top:18px}
+.scroll-hint a{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:800;color:var(--navy);animation:bounceHint 1.4s infinite}
+/* sections */
+.sec{padding:38px 0}
+.sec-h{text-align:center;margin-bottom:20px}
+.sec-tag{display:inline-block;background:var(--brand-soft);border:1px solid #bbf7d0;color:var(--brand-2);font-size:12px;font-weight:800;padding:5px 13px;border-radius:50px;margin-bottom:10px}
+.sec-h h2{font-size:clamp(19px,5.4vw,28px);font-weight:900}
+#how .sec-h h2{font-size:clamp(24px,7vw,36px)}
+.sec-h p{color:var(--muted);font-size:13.5px;margin-top:6px}
+/* walkthrough */
+.walk{display:grid;gap:10px;max-width:720px;margin:0 auto}
+.wstep{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:15px 14px;box-shadow:var(--shadow);display:flex;gap:12px;align-items:flex-start}
+.wstep-n{width:34px;height:34px;border-radius:10px;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;flex:0 0 auto}
+.wstep h3{font-size:14.5px;font-weight:800;margin-bottom:2px}
+.wstep h3 .hl{color:var(--brand-2)}
+.wstep p{font-size:12.5px;color:var(--body)}
+.wstep .click{display:inline-block;background:var(--brand-soft);border:1px solid #bbf7d0;color:var(--brand-2);font-weight:800;font-size:12px;padding:3px 12px;border-radius:8px;margin-top:6px}
+/* on-page video */
+.video-block{max-width:560px;margin:20px auto 0;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px;box-shadow:var(--shadow)}
+.video-block video{width:100%;border-radius:10px;background:#000;display:block}
+.video-block .vb-label{text-align:center;font-size:13px;font-weight:800;color:var(--ink);margin:10px 0 4px}
+.video-block .vb-sub{text-align:center;font-size:12px;color:var(--muted)}
+/* why */
+.why{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.why-item{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:16px 12px;text-align:center}
+.why-item .ic{font-size:23px;margin-bottom:6px}
+.why-item h3{font-size:13.5px;font-weight:800;margin-bottom:2px}
+.why-item p{font-size:11.5px;color:var(--muted)}
+/* testimonials */
+.testi{display:grid;gap:10px}
+.t-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 14px;box-shadow:var(--shadow)}
+.t-stars{color:#f5a623;letter-spacing:2px;font-size:13px;margin-bottom:8px}
+.t-card p{font-size:13px;color:var(--body);margin-bottom:10px}
+.t-name{font-weight:800;font-size:13px}
+.t-name span{display:block;color:var(--muted);font-size:11.5px;font-weight:500}
+/* faq */
+.faq{display:grid;gap:8px;max-width:720px;margin:0 auto}
+details{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+summary{list-style:none;cursor:pointer;padding:13px 15px;font-size:13.5px;font-weight:800;display:flex;justify-content:space-between;align-items:center;gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';font-size:18px;color:var(--brand);font-weight:900;flex:0 0 auto}
+details[open] summary::after{content:'−'}
+details .a{padding:0 15px 13px;font-size:12.5px;color:var(--body)}
+/* trust strip */
+.trust-strip{background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.trust-strip-in{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:1080px;margin:0 auto;padding:14px}
+.trust-item{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;justify-content:center;color:var(--ink)}
+.trust-item .ti{width:30px;height:30px;border-radius:8px;background:var(--green-soft);display:flex;align-items:center;justify-content:center;font-size:15px;flex:0 0 auto}
+/* footer */
+footer{background:var(--navy);color:#c8d2e5;padding:34px 14px 30px}
+.foot-grid{display:grid;gap:18px;max-width:1080px;margin:0 auto}
+.foot-grid h4{font-size:14px;font-weight:800;color:#fff;margin-bottom:9px}
+.foot-grid p,.foot-grid a{font-size:12.5px;color:#a8b4cc;display:block;margin-bottom:5px}
+.copyright{text-align:center;font-size:11.5px;color:#7d8aa6;margin-top:22px}
+/* sticky CTA */
+.sticky{position:fixed;bottom:0;left:0;right:0;z-index:950;display:none;background:var(--surface);border-top:1px solid var(--line);padding:10px 14px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -6px 24px rgba(16,24,40,.12)}
+.sticky.show{display:block}
+.sticky .btn{width:100%;font-size:15.5px}
+/* verify modal */
+.verify-overlay{display:none;position:fixed;inset:0;z-index:10000;background:rgba(10,14,24,.78);justify-content:center;align-items:center;padding:14px}
+.verify-overlay.show{display:flex}
+.verify-modal{background:var(--surface);border-radius:18px;padding:16px 14px;max-width:400px;width:100%;text-align:center;box-shadow:0 24px 70px rgba(0,0,0,.45);animation:modalIn .22s ease;max-height:94vh;overflow-y:auto}
+@keyframes modalIn{from{opacity:0;transform:scale(.95) translateY(14px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.verify-icon{width:46px;height:46px;border-radius:12px;background:var(--brand-soft);display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 8px}
+.verify-modal h3{font-size:17px;font-weight:900;margin-bottom:4px}
+.verify-sub{font-size:12.5px;color:var(--body);margin-bottom:10px}
+.video-wrap{background:#000;border-radius:12px;overflow:hidden;margin-bottom:10px;position:relative}
+.video-wrap video{width:100%;display:block;max-height:170px;background:#000}
+.verify-steps{text-align:right;margin-bottom:10px;display:grid;gap:6px}
+.verify-steps .ltr{text-align:left}
+.verify-step{display:flex;gap:10px;align-items:flex-start;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 10px}
+.verify-step-num{width:25px;height:25px;border-radius:8px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;flex-shrink:0;margin-top:1px}
+.verify-step b{font-size:13px;display:block}
+.verify-step p{font-size:11.5px;color:var(--muted);margin:0;line-height:1.5}
+.verify-step p code{background:#eef2f7;border-radius:5px;padding:0 5px;font-size:11px;color:var(--ink);font-weight:700}
+.vcontinue{margin-top:2px}
+.vskip{display:block;color:var(--muted);font-size:12px;font-weight:600;text-decoration:underline;margin:10px auto 0}
+/* phase B */
+.verify-choice{font-size:13px;font-weight:800;margin:0 0 10px}
+.verify-cta{display:flex;align-items:center;justify-content:center;gap:8px;background:var(--brand);color:#fff;font-weight:900;font-size:15px;padding:14px 18px;border-radius:12px;margin-bottom:9px;box-shadow:0 8px 22px rgba(22,163,74, .35)}
+.verify-cta:active{background:var(--brand-2)}
+.verify-cta-alt{background:var(--navy);box-shadow:0 8px 22px rgba(15,27,51,.25)}
+.verify-cta-alt:active{background:#16274a}
+.verify-fallback{font-size:12px;color:var(--body);background:var(--brand-soft);border:1px solid #bbf7d0;border-radius:10px;padding:10px 12px;margin-bottom:12px;line-height:1.6}
+.verify-safe{font-size:11.5px;color:var(--green);font-weight:700;margin-bottom:12px}
+.verify-close{background:var(--bg);border:1px solid var(--line);color:var(--muted);font-size:12.5px;font-weight:700;padding:9px 20px;border-radius:10px}
+.verify-foot{font-size:11px;color:var(--muted);margin-top:11px}
+/* reveal */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .5s,transform .5s}
+.rv.in{opacity:1;transform:translateY(0)}
+/* ===== tablet/desktop ===== */
+@media(min-width:768px){
+.container{padding:0 20px}
+.hero{padding:50px 20px 42px}
+.hero h1{font-size:42px}
+.hero-sub{font-size:16px}
+.trust-strip-in{grid-template-columns:repeat(4,1fr);padding:16px 20px}
+.walk{grid-template-columns:repeat(2,1fr)}
+.why{grid-template-columns:repeat(4,1fr);gap:14px}
+.testi{grid-template-columns:repeat(3,1fr);gap:14px}
+.foot-grid{grid-template-columns:2fr 1fr 1fr;gap:24px}
+.sec{padding:52px 0}
+}
+</style>
+<script defer src="https://umami-vixrdrj5o0ebze7cp3pf9xtc.157.173.119.18.sslip.io/script.js" data-website-id="9d6bb18e-8ec6-45df-8e76-39976eef2465"></script>
+<script>
+/* Tracking — one listener, no double-firing. Event names preserved. */
+(function(){
+  try{
+    if(window.__auroraCtaLoaded)return;window.__auroraCtaLoaded=true;
+    var track=function(name,label){try{if(window.umami&&umami.track)umami.track(name,{label:label||""});}catch(e){}};
+    document.addEventListener("click",function(e){
+      try{
+        var el=e.target&&e.target.closest?e.target.closest("a,button"):null;
+        if(!el)return;
+        var dt=el.getAttribute&&el.getAttribute("data-track");
+        if(dt){track(dt,(el.getAttribute&&el.getAttribute("data-name"))||(el.textContent||"").trim().substring(0,40));return;}
+        var h=(el.href||"");
+        if(h.indexOf("price-low")>-1||h.indexOf("surveoo")>-1||h.indexOf("mylead")>-1){
+          if(h.indexOf("Krzgzt4AqrFA63o")>-1){track("cta-offer-click-king",(el.textContent||"").trim().substring(0,40));}
+          else{track("cta-offer-click",(el.textContent||"").trim().substring(0,40));}
+          return;
+        }
+        if((el.getAttribute&&el.getAttribute("onclick")||"").indexOf("openVerify")>-1){
+          track("cta-verify-open",(el.textContent||"").trim().substring(0,40));
+        }
+      }catch(e){}
+    },true);
+  }catch(e){}
+})();
+</script>
+</head>
+<body>
+
+<div class="topbar">🚚 توصيل مجاني 24-48 ساعة — <b>الدفع عند الاستلام</b></div>
+
+<header class="hdr">
+<div class="hdr-in">
+  <div class="logo">
+    <div class="logo-mark">
+      <svg width="21" height="21" viewBox="0 0 24 24" fill="none"><path d="M3 8.5 12 3l9 5.5v9L12 23l-9-5.5v-9Z" fill="#fff" opacity=".95"/><path d="M8.5 11.5v4.5h7v-4.5" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    </div>
+    <div class="logo-name">Tashilat Tech<small>التقسيط ميسّر — الدار البيضاء</small></div>
+  </div>
+  <a class="hdr-cta" href="javascript:void(0)" onclick="openVerify(this)">سجّل واحصل على السعر</a>
+</div>
+</header>
+
+<main>
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-eyebrow">✅ إمكانية التقسيط — ابدأ من 100 درهم شهرياً</div>
+  <h1>آيفون وسامسونج وشاومي<br><span class="hl">بالتقسيط — ابدأ من 100 درهم شهرياً</span></h1>
+  <p class="hero-sub">منتجات أصلية بثمن التصفية، مع إمكانية التقسيط المريح. <b>الدفع عند الاستلام</b> — تستلم السلعة وتشوفها بعينيك قبل أي شي.</p>
+  <div class="cta-hint">👇 👇 اضغط هنا باش تبدا — مجاني</div>
+  <div class="hero-cta-wrap">
+    <a class="btn btn-primary btn-lg" href="javascript:void(0)" onclick="openVerify(this)">⚡ سجّل واحصل على سعر التقسيط — مجاني</a>
+    <div class="hero-trust">
+      <span><span class="tick">✓</span> مجاني 100%</span>
+      <span><span class="tick">✓</span> تسجيل 30 ثانية</span>
+      <span><span class="tick">✓</span> بدون بطاقة بنكية</span>
+      <span><span class="tick">✓</span> ضمان 30 يوم</span>
+    </div>
+  </div>
+  <div class="scroll-hint"><a href="#how">👇 👇 زيد نزل لتحت — «شنو غادي دير؟» خطوة بخطوة</a></div>
+</section>
+
+<!-- ============ WALKTHROUGH ============ -->
+<section class="sec" id="how">
+<div class="container">
+<div class="sec-h rv"><span class="sec-tag">📋 📋 خطوة بخطوة</span><h2>شنو غادي دير بالضبط؟</h2><p>متابعة سهلة — اتبع الخطوات بالترتيب وما غادي تحتار.</p></div>
+<div class="walk rv">
+  <div class="wstep"><div class="wstep-n">1</div><div><h3>اضغط على الزر <span class="hl">«سجّل واحصل على السعر»</span></h3><p>الزر الكبير الملوّن — كاين فوسط الصفحة، وكاين أيضاً فتحت وفوق. راه فهاد النقطة 👇</p><span class="click">⬆ اضغط على الزر</span></div></div>
+  <div class="wstep"><div class="wstep-n">2</div><div><h3>شاهد الفيديو القصير</h3><p>فيديو دقيقة واحدة يشرح ليك كيفاش تسجل خطوة بخطوة. شوفو كامل — هو اللي يوصلك.</p><span class="click">🎬 الفيديو تحت مباشرة</span></div></div>
+  <div class="wstep"><div class="wstep-n">3</div><div><h3>اختر <span class="hl">Surveoo</span> أو <span class="hl">KingOpinion</span></h3><p>هذوما شركاؤنا الرسميون. أي واحد اخترتي — نفس الخطوات، والتسجيل فيهم مجاني 100%.</p><p style="margin-top:6px">⚠️ إذا ما توفقتش فالموقع الأول وظهرت ليك علامة حزينة 😢 — ما تهرسش! جرّب الثاني بنفس الطريقة. واحد منهم غادي يقبل ويفتح ليك الخصم.</p></div></div>
+  <div class="wstep"><div class="wstep-n">4</div><div><h3>سجّل بإيميلك وكمل الخطوات</h3><p>دخل بريدك الإلكتروني واكمل حتى تشوف كلمة <b>«تم بنجاح»</b>. بدون بطاقة بنكية وبدون أي دفع.</p></div></div>
+  <div class="wstep"><div class="wstep-n">5</div><div><h3>ارجع للموقع — السعر غادي يوصلك</h3><p>من بعد التفعيل غادي نتواصلو معاك بالسعر. تختار المنتج، ونوصلو ليك لباب الدار — وتشوف السلعة بعينيك قبل أي حاجة.</p></div></div>
+</div>
+<div class="video-block rv">
+  <video id="pageVideo" controls playsinline preload="none">
+    <source src="/assets/tutorial.mp4?v=5c77a2eb09" type="video/mp4">
+  </video>
+  <div class="vb-label">🎬 شاهد الفيديو: كيفاش تسجل وتفعّل حسابك</div>
+  <div class="vb-sub">دقيقة واحدة — اضغط على الفيديو وابدأ</div>
+</div>
+<div class="rv" style="max-width:420px;margin:22px auto 0"><a class="btn btn-primary btn-lg" href="javascript:void(0)" onclick="openVerify(this)">⚡ ابدأ الآن — سجّل مجاناً</a></div>
+</div>
+</section>
+
+<!-- ============ WHY ============ -->
+<section class="sec" style="background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+<div class="container">
+<div class="sec-h rv"><span class="sec-tag">💎 💎 لماذا نحن؟</span><h2>تسوّق ساهل وبالتقسيط</h2></div>
+<div class="why rv">
+  <div class="why-item"><div class="ic">✅</div><h3>أصلي 100%</h3><p>منتجات أوروبا نفحصها قطعة قطعة</p></div>
+  <div class="why-item"><div class="ic">💵</div><h3>الدفع عند الاستلام</h3><p>تستلم السلعة وتتحقق منها بنفسك</p></div>
+  <div class="why-item"><div class="ic">🛡️</div><h3>ضمان 30 يوم</h3><p>استبدال فوري إن وجد أي عيب</p></div>
+  <div class="why-item"><div class="ic">🚚</div><h3>توصيل مجاني</h3><p>24-48 ساعة لجميع المدن</p></div>
+</div>
+</div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="sec">
+<div class="container">
+<div class="sec-h rv"><span class="sec-tag">⭐ ⭐ آراء العملاء</span><h2>ماذا قالوا عنا؟</h2></div>
+<div class="testi rv">
+  <div class="t-card"><div class="t-stars">★★★★★</div><p>كنت حاب iPhone ولكن الثمن كان بعيد عليا. مع التقسيط والدفع عند الاستلام قدرت ناخدو بلا ما نهرس.</p><div class="t-name">عماد <span>الدار البيضاء</span></div></div>
+  <div class="t-card"><div class="t-stars">★★★★★</div><p>سجلت وفعّلت حسابي في دقائق، والطلبية وصلاتني لطنجة. الثمن ناضج والمنتج أصلي 100%.</p><div class="t-name">سلمى <span>طنجة</span></div></div>
+  <div class="t-card"><div class="t-stars">★★★★★</div><p>أول مرة نجرّب التقسيط من عندهم — الخطوات واضحة والخدمة ناضجة. ننصح بيهم.</p><div class="t-name">مهدي <span>مراكش</span></div></div>
+</div>
+</div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="sec" style="background:var(--surface);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+<div class="container">
+<div class="sec-h rv"><span class="sec-tag">❓ ❓ أسئلة شائعة</span><h2>عندك سؤال؟ هنا الجواب</h2></div>
+<div class="faq rv">
+<details open><summary>شنو هو Surveoo؟ وشنو هو KingOpinion؟</summary><div class="a">هما شريكانا الرسميون — منصات عالمية معروفة كيخدمو مع أكبر الشركات. التسجيل فيهم مجاني 100%، وبياناتك محمية وما كتتباع لشي حد. كاينين غير باش يفعلو حسابك ويوصلك السعر.</div></details>
+<details><summary>واش درت الخطوات وما توفقتش؟</summary><div class="a">إذا ما توفقتش على Surveoo وظهرت ليك علامة حزينة 😢 — جرّب KingOpinion بنفس الطريقة. واحد منهم غادي يقبل ويفتح ليك الخصم. هكذا كيخدم العرض: واحد من الشريكين كيقبل. وإذا بقات عندك مشكلة، راسلنا على البريد.</div></details>
+<details><summary>واش التسجيل والوصول للسعر مجاني فعلاً؟</summary><div class="a">نعم 100%. لا نطلب أي دفع قبل الاستلام — الدفع يكون فقط نقداً عند وصول المنتج إليك (الدفع عند الاستلام).</div></details>
+<details><summary>واش خاصني بطاقة بنكية؟</summary><div class="a">لا، أبداً. التسجيل بدون بطاقة بنكية وبدون أي دفع. الدفع يكون غير «عند الاستلام» — يعني ملي توصلك السلعة وتشوفها بعينيك. ما كاين حتى دفع قبل ذلك.</div></details>
+<details><summary>لماذا يجب التسجيل عبر Surveoo أو KingOpinion؟</summary><div class="a">هذا هو شرط الشراكة بيننا وشريكنا الرسمي للحصول على أثمنة الجملة. الخطوات قصيرة — أقل من دقيقتين — ويُفعّل حسابك مباشرة.</div></details>
+<details><summary>هل المنتجات أصلية فعلاً؟</summary><div class="a">نعم. مرتجعات أمازون أوروبا نفحصها قطعة قطعة في مستودعنا ونضمنها بضمان 30 يوم.</div></details>
+</div>
+</div>
+</section>
+</main>
+
+<!-- ============ TRUST STRIP ============ -->
+<div class="trust-strip">
+<div class="trust-strip-in">
+  <div class="trust-item"><div class="ti">💵</div>الدفع عند الاستلام</div>
+  <div class="trust-item"><div class="ti">🛡️</div>ضمان 30 يوم</div>
+  <div class="trust-item"><div class="ti">🚚</div>توصيل مجاني 24-48 ساعة</div>
+  <div class="trust-item"><div class="ti">✅</div>منتجات أصلية 100%</div>
+</div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+<div class="foot-grid">
+  <div>
+    <h4>📦 Tashilat Tech</h4>
+    <p>تسوّق الآن وخلّص بالتقسيط — ابدأ من 100 درهم شهرياً. هواتف وإلكترونيات أصلية بضمان 30 يوم والدفع عند الاستلام.</p>
+  </div>
+  <div>
+    <h4>تواصل معنا</h4>
+    <p>📍 📍 الدار البيضاء — المغرب</p>
+    <a href="https://tasshilatttech.store">🌐 tasshilatttech.store</a>
+    <a href="/cdn-cgi/l/email-protection#beddd1d0cadfddcafecadfcdcdd6d7d2dfcacacadbddd690cdcad1ccdb">✉️ <span class="__cf_email__" data-cfemail="fa9995948e9b998eba8e9b89899293969b8e8e8e9f9992d4898e95889f">[email&#160;protected]</span></a>
+    <p>🕐 🕐 الإثنين – السبت: 9:00 – 18:00</p>
+  </div>
+  <div>
+    <h4>ضماناتنا</h4>
+    <p>✅ الدفع عند الاستلام</p>
+    <p>✅ ضمان 30 يوم</p>
+    <p>✅ إرجاع مجاني خلال 7 أيام</p>
+    <p>✅ توصيل مجاني 24-48 ساعة</p>
+  </div>
+</div>
+<div class="copyright">© 2026 Tashilat Tech — جميع الحقوق محفوظة</div>
+</footer>
+
+<!-- ============ STICKY CTA ============ -->
+<div class="sticky" id="sticky">
+<a class="btn btn-primary btn-lg" href="javascript:void(0)" onclick="openVerify(this)">⚡ سجّل واحصل على سعر التقسيط — مجاني</a>
+</div>
+
+<!-- ============ VERIFY MODAL ============ -->
+<div class="verify-overlay" id="verifyOverlay" onclick="closeVerify()">
+<div class="verify-modal" onclick="event.stopPropagation()">
+
+  <!-- PHASE A -->
+  <div id="modalA">
+    <div class="verify-icon">🎬</div>
+    <h3>شاهد الفيديو — من بعد اضغط على الزر</h3>
+    <p class="verify-sub">الفيديو يشرح ليك كيفاش تسجل خطوة بخطوة — دقيقة واحدة فقط.</p>
+    <div class="video-wrap">
+      <video id="tutVideo" controls autoplay loop playsinline webkit-playsinline preload="none">
+        <source src="/assets/tutorial.mp4?v=5c77a2eb09" type="video/mp4">
+      </video>
+    </div>
+    <div class="verify-steps ">
+      <div class="verify-step"><div class="verify-step-num">1</div><div><b>سجّل بإيميلك</b><p><code><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="046a656961446369656d682a676b69">[email&#160;protected]</a></code> — بدون بطاقة بنكية</p></div></div>
+      <div class="verify-step"><div class="verify-step-num">2</div><div><b>كمل الخطوات</b><p>حتى تشوف كلمة «تم بنجاح» — ثم ارجع للموقع</p></div></div>
+      <div class="verify-step"><div class="verify-step-num">3</div><div><b>راسلنا</b><p>يوصلك سعر المنتج وثمن الشحن مباشرة</p></div></div>
+    </div>
+    <a class="btn btn-primary btn-lg vcontinue" href="javascript:void(0)" onclick="showPhaseB()" data-track="cta-modal-continue">👇 شفت الفيديو — ابدا التسجيل</a>
+    <a class="vskip" href="javascript:void(0)" onclick="showPhaseB()" data-track="cta-modal-skip">تخطي</a>
+  </div>
+
+  <!-- PHASE B -->
+  <div id="modalB" style="display:none">
+    <div class="verify-icon">🔓</div>
+    <h3>اختر شريكك واكمل التسجيل</h3>
+    <p class="verify-sub">Surveoo وKingOpinion هما شركاؤنا الرسميون — التسجيل فيهم مجاني. اختار أي واحد وكمل نفس الخطوات اللي شفتيها فالفيديو.</p>
+    <div class="verify-choice">👇 👇 اضغط على واحد منهم — أو الاثنين:</div>
+    <a data-studio-offer="surveoo" class="verify-cta" href="https://price-low.eu/a/L90j0sYzx6Sm0j7">🥇 Surveoo — سجّل مجاناً</a>
+    <a data-studio-offer="kingopinion" class="verify-cta verify-cta-alt" href="https://price-low.eu/a/Krzgzt4AqrFA63o">🥈 KingOpinion — سجّل مجاناً</a>
+    <div class="verify-fallback">⚠️ إذا ما توفقتش على Surveoo وظهرت ليك علامة حزينة 😢 — ما تهرسش! جرّب KingOpinion بنفس الطريقة. واحد منهم غادي يقبل ويفتح ليك الخصم.</div>
+    <div class="verify-safe">✓ بدون بطاقة بنكية &nbsp;•&nbsp; ✓ بدون أي دفع &nbsp;•&nbsp; ✓ بياناتك محمية</div>
+    <button class="verify-close" onclick="closeVerify()">إلغاء</button>
+    <div class="verify-foot">💡 💡 إذا لم يعمل أحد العرضين، جرّب الآخر — الدعم متاح على البريد</div>
+  </div>
+
+</div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+(function(){
+"use strict";
+var sticky=document.getElementById('sticky');
+function onScroll(){if(window.scrollY>220){sticky.classList.add('show');}else{sticky.classList.remove('show');}}
+window.addEventListener('scroll',onScroll,{passive:true});
+onScroll();
+
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+
+var overlay=document.getElementById('verifyOverlay');
+var modalA=document.getElementById('modalA'),modalB=document.getElementById('modalB');
+var video=document.getElementById('tutVideo');
+var nudged=false;
+
+window.openVerify=function(el){
+  modalA.style.display='block';modalB.style.display='none';
+  overlay.classList.add('show');
+  document.body.style.overflow='hidden';
+  try{if(video){video.play().catch(function(){});}}catch(e){}
+};
+window.closeVerify=function(){
+  overlay.classList.remove('show');
+  document.body.style.overflow='';
+  try{if(video){video.pause();}}catch(e){}
+};
+window.showPhaseB=function(){
+  modalA.style.display='none';modalB.style.display='block';
+  try{if(video){video.pause();}}catch(e){}
+};
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeVerify();});
+
+function nudge(){
+  if(nudged)return;nudged=true;
+  var shown=overlay.classList.contains('show');
+  if(!shown){window.openVerify();}
+}
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden'){setTimeout(nudge,400);}});
+window.addEventListener('pagehide',nudge);
+})();
+</script>
+<script>
+(function(){
+  try{
+    if(window.__auroraDeepTrack)return;window.__auroraDeepTrack=true;
+    var track=function(n,l){try{if(window.umami&&umami.track)umami.track(n,{label:l||""});}catch(e){}};
+    var marks=[25,50,75,100],done={};
+    var onScroll=function(){
+      var h=document.documentElement.scrollHeight-window.innerHeight;
+      var p=h>0?Math.round(window.scrollY/h*100):0;
+      for(var i=0;i<marks.length;i++){if(p>=marks[i]&&!done[marks[i]]){done[marks[i]]=1;track("scroll-"+marks[i]);}}
+    };
+    window.addEventListener("scroll",onScroll,{passive:true});
+    window.addEventListener("pagehide",function(){track("exit-page");});
+    document.addEventListener("visibilitychange",function(){if(document.visibilityState==="hidden"){track("tab-hidden");}});
+    var v=document.querySelector("#pageVideo");
+    if(v){var vio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){track("video-visible");vio.disconnect();}});},{threshold:.3});vio.observe(v);}
+  }catch(e){}
+})();
+</script>
+<script defer src="https://51.170.133.14:34568/track/client.js" data-site="tasshilatttech"></script></body>
+</html>
