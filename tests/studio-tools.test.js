@@ -1,6 +1,8 @@
 'use strict';
 const {test}=require('node:test'),assert=require('node:assert/strict'),fs=require('fs'),os=require('os'),path=require('path'),{EventEmitter}=require('events');
 const {createStudioTools}=require('../lib/studio-tools');
+const {explicitMutation,namedPages}=require('../lib/studio-tools');
+const {requestedWriterUpdate,requestedWriterAndProduction}=require('../lib/nanobot-bridge');
 const {createPageLearning}=require('../lib/page-learning');
 const {createPublish}=require('../lib/publish');
 const {PROFILES}=require('../lib/campaign-profiles');
@@ -31,6 +33,15 @@ test('assistant fresh production is authorized, idempotent and cannot request pu
   const plan={tool:'production.start',page:'maghrebly'},ctx={authorized:true,requestId:'once',text:'make a Maghrebly video'};
   await assert.rejects(tools.execute(plan,{...ctx,authorized:false}));await tools.execute(plan,ctx);await tools.execute(plan,ctx);assert.equal(calls,1);assert.equal(projects.length,1);
   await assert.rejects(tools.execute({tool:'shell.execute',page:'all'},ctx),/Unsupported/);
+});
+test('Arabic owner command updates one writer then requests one fresh non-publishing production',async t=>{
+  const text='حدث كتابة MaghrebTechStore وقاد فيديو جديد';
+  assert.equal(explicitMutation(text),true);assert.deepEqual(namedPages(text),['maghrebtechstore']);
+  assert.equal(requestedWriterUpdate('Update MaghrebTechStore writer instructions only. Add accurate Surveyoo CTA.'),'maghrebtechstore');
+  assert.equal(requestedWriterAndProduction(text),'maghrebtechstore');
+  assert.equal(requestedWriterUpdate('What should I change in MaghrebTechStore writing?'),null);
+  assert.equal(requestedWriterAndProduction('شرح ليا كيفاش نحدث كتابة MaghrebTechStore'),null);
+  assert.equal(requestedWriterAndProduction('حدث كتابة MaghrebTechStore'),null);
 });
 test('owner publishing hold prevents any upload even with confirm enabled',async()=>{
   const api=createPublish({store:{},hold:()=>true});await assert.rejects(api.execute({confirm:true}),/paused by the owner/);

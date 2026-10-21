@@ -16,6 +16,8 @@
   }
   function panel(name) {
     $('writer-settings-panel').hidden = name !== 'writer'; $('facebook-settings-panel').hidden = name !== 'facebook';
+    if($('mylead-settings-panel'))$('mylead-settings-panel').hidden=true; if($('mylead-settings-tab'))$('mylead-settings-tab').classList.remove('active');
+    if($('site-integrations-panel'))$('site-integrations-panel').hidden=true; if($('site-integrations-tab'))$('site-integrations-tab').classList.remove('active');
     $('writer-settings-tab').classList.toggle('active', name === 'writer'); $('facebook-settings-tab').classList.toggle('active', name === 'facebook'); $('settings-check').hidden = name !== 'facebook'; if($('video-settings-panel'))$('video-settings-panel').hidden=name!=='video'; if($('video-settings-tab'))$('video-settings-tab').classList.toggle('active',name==='video');
   }
   function select(key) {

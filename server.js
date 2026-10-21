@@ -1751,6 +1751,16 @@ log('[studio] v2 mounted: ' + Object.keys(studio.routes).length + ' routes, ' + 
 
 const server = http.createServer(async (req, res) => {
   const u = new URL(req.url, 'http://127.0.0.1');
+  if (u.pathname === '/mylead-lead') {
+    studio.mylead.handlePostback(req,res,u); return;
+  }
+  // Only these three public tracker paths bypass dashboard authentication. They never
+  // expose settings, credentials, reports or the general Studio tool bridge.
+  if (require('./lib/site-tracking').PUBLIC_PATHS.has(u.pathname)) {
+    try { await studio.tracking.handlePublic(req, res, u); }
+    catch (_) { if (!res.headersSent) res.writeHead(503); res.end(); }
+    return;
+  }
   if (process.env.VS_AUTH_PASSWORD && !['/health/live','/health/ready'].includes(u.pathname)) {
     const expected = Buffer.from((process.env.VS_AUTH_USER || 'studio') + ':' + process.env.VS_AUTH_PASSWORD);
     let supplied = Buffer.alloc(0);

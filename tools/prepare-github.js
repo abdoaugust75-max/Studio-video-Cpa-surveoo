@@ -7,6 +7,8 @@ const roots=['AGENTS.md','start.bat','start-pipeline.bat','run_server.bat','watc
   'tests/release.test.js','tests/production-model-routing.js','tests/video-understanding.js','tests/source-continuation.js','tests/provider-audio.test.js','tests/automation.test.js','tests/telegram-video-review.test.js','tests/telegram-agent.test.js','tests/studio-tools.test.js','tools/transcribe-audio.py','tools/alignment_boundaries.py','tools/speech-requirements.txt','tools/setup-speech.ps1','tools/studio-nanobot.py','tools/setup-agent.ps1','tools/prepare-github.js','tools/check-local.js','tools/validate-campaign.js','docs/TELEGRAM_REVIEW.md','docs/LOCAL_SETUP.md','docs/LOCAL_VALIDATION_2026-10-18.md','docs/API_AND_AUDIO.md','docs/AUTOMATION.md','docs/PAGE_LEARNING.md','docs/LOCAL_AGENT_AND_STORAGE.md'];
 roots.push('tools/private-state-backup.js','docs/PRIVATE_BACKUP.md');
 roots.push('deploy/umbrel','docs/VPS_UMBREL.md');
+roots.push('tests/site-tracking.test.js','docs/SITE_TRACKING.md');
+roots.push('tests/site-integrations.test.js','docs/SITE_CONNECTIONS.md');
 const files=[];
 function collect(rel){const full=path.join(root,rel);if(!fs.existsSync(full))throw Error('Release source missing: '+rel);if(fs.lstatSync(full).isSymbolicLink())throw Error('Symlinks are not allowed in release');if(fs.statSync(full).isDirectory()){for(const name of fs.readdirSync(full))collect(path.join(rel,name));}else files.push(rel);}
 roots.forEach(collect);

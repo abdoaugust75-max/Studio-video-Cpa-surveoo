@@ -42,6 +42,9 @@
 !/tests/production-model-routing.js
 !/tests/video-understanding.js
 !/tests/source-continuation.js
+!/tests/site-tracking.test.js
+!/tests/site-integrations.test.js
+!/tests/telegram-video-review.test.js
 !/docs/
 /docs/*
 !/docs/AUTOMATION.md
@@ -51,6 +54,9 @@
 !/docs/LOCAL_SETUP.md
 !/docs/LOCAL_VALIDATION_2026-10-18.md
 !/docs/PRIVATE_BACKUP.md
+!/docs/SITE_TRACKING.md
+!/docs/SITE_CONNECTIONS.md
+!/docs/TELEGRAM_REVIEW.md
 !/private-backup/
 /private-backup/*
 !/private-backup/2026-10-20/
