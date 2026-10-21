@@ -43,6 +43,15 @@ test('Arabic owner command updates one writer then requests one fresh non-publis
   assert.equal(requestedWriterAndProduction('شرح ليا كيفاش نحدث كتابة MaghrebTechStore'),null);
   assert.equal(requestedWriterAndProduction('حدث كتابة MaghrebTechStore'),null);
 });
+test('website agent reads the mapped connection and writes only after a named owner request',async t=>{
+  const dir=fs.mkdtempSync(path.join(os.tmpdir(),'studio-website-tools-'));t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));const calls=[];
+  const siteIntegrations={settings:()=>({github:{connected:true},cloudflare:{connected:true},sites:[{id:'maghrebtechstore',domain:'maghrebtechstore.com'}]}),updateFile:async x=>{calls.push(x);return{ok:true,commit:'abc123'};}};
+  const tools=createStudioTools({dir,campaigns:{},learning:{},jobs:{list:()=>[]},llm:{},store:{},siteIntegrations,tracking:{settings:()=>({sites:[{id:'maghrebtechstore',enabled:true}]})}});
+  const inventory=await tools.execute({tool:'website.list'},{authorized:false});assert.equal(inventory.sites[0].tracking,true);
+  await assert.rejects(tools.execute({tool:'website.file.update',site:'maghrebtechstore',path:'index.html',content:'new'},{authorized:false}));
+  const result=await tools.execute({tool:'website.file.update',site:'maghrebtechstore',path:'index.html',content:'new'},{authorized:true,requestId:'site-edit-1',text:'edit maghrebtechstore website'});
+  assert.equal(result.commit,'abc123');assert.equal(calls.length,1);assert.equal(calls[0].id,'maghrebtechstore');
+});
 test('owner publishing hold prevents any upload even with confirm enabled',async()=>{
   const api=createPublish({store:{},hold:()=>true});await assert.rejects(api.execute({confirm:true}),/paused by the owner/);
 });
